@@ -14,6 +14,48 @@ In ASIC design flow, PnR is the core which consists of several steps. Below are 
 * Placement: Placement steps decide the location of stdcells in the design. In this step, the wire length is estimated and therefore placement takes place considering the estimated wire lengths.
 * Clock-tree synthesis (CTS): In this step clock tree netlist is implemented, which includes buffers, and the wiring of the clock network is performed. The objective of this step is to minimize the skew and minimize power dissipation.
 * Routing (Global and Detailed): Routing creates the wiring layout for all nets other than the clock and power supply. The routing is divided into GLOBAL ROUTING and DETAILED ROUTING. Global routing is the planning stage, where a routing plan for a given net is created by dividing the entire routing region into rectangular tiles or bins. The detailed router decides the actual routing of each pre-assigned globals bins, where the actual wires and vias are created
+
+Microcontroller Board Components
+
+Core:
+Definition: The central processing unit (CPU) of the microcontroller that executes instructions. Example: ARM Cortex-M, RISC-V core. Die:
+
+Pad:
+Definition: The physical connection points on the microcontroller chip where external components are connected.
+
+GPIO (General-Purpose Input/Output):
+Definition: Pins on the microcontroller that can be programmed to either input signals (e.g., sensors) or output signals (e.g., LEDs).
+
+Bank:
+Definition: A grouping of I/O pins or memory segments used for organization within the microcontroller. For GPIO, it refers to a set of pins grouped together.
+
+Foundries:
+Definition: Facilities where the microcontroller chips are manufactured. Examples include TSMC, Intel.
+
+IPs (Intellectual Properties):
+Definition: Pre-designed blocks of logic that can be integrated into the microcontroller. Examples include UART, SPI, and I2C controllers.
+
+SRAM (Static Random-Access Memory):
+Definition: A type of volatile memory used for temporary data storage within the microcontroller. Fast but more expensive and power-consuming than DRAM.
+
+DRAM (Dynamic Random-Access Memory):
+Definition: A type of volatile memory used for larger, temporary data storage. Requires periodic refreshing to maintain data.
+
+ADC (Analog-to-Digital Converter):
+Definition: Converts analog signals (e.g., sensor outputs) into digital values that can be processed by the microcontroller.
+
+DAC (Digital-to-Analog Converter):
+Definition: Converts digital values into analog signals (e.g., to drive speakers or analog displays).
+
+RISC-V SoC (System on Chip):
+Definition: A microcontroller or microprocessor incorporating a RISC-V core along with additional integrated components such as memory, peripherals, and communication interfaces.
+
+Macros:
+Definition: Predefined sequences of code or hardware configurations used to simplify and automate repetitive tasks in programming or hardware design.
+
+Connecting All Components
+Core: Executes instructions and processes data. Die: Houses the core and other integrated components. Pad: Connects the die to external components via GPIO. GPIO: Interfaces with external devices, configured via macros. Bank: Organizes GPIO and other resources. Foundries: Manufacture the microcontroller with the integrated core, SRAM, DRAM, ADC, DAC, and IPs. IPs: Provide specialized functions like UART and SPI, integrated into the SoC. SRAM & DRAM: Store data temporarily for processing and operation. ADC & DAC: Enable analog signal processing and generation. This layout ensures a microcontroller can interact with the external world and perform complex tasks by integrating various components into a single, functional chip.
+
 ### __LAB 1:GETTING FAMILIAR WITH OPENLANE EDA TOOLS__
 __Design Preparation Step:
 ### 
@@ -72,6 +114,7 @@ __HOW TO MAKE CHANGES WHILE BEING IN THE FLOW?__
 
 One can change the floorplan variables like core utilization and IO mode Example : TO CHANGE THE IO pins alignment in the layout, first we can verify the current configuration of the Pins, Go to the following directory as shown in the image below:
 `/home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/26-07_10-33/results/floorplan`
+
 Then use the command to open the '.def' file in magic:
 ` magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def
 
@@ -247,6 +290,9 @@ Generated cts file:
 ![generated CTS file](https://github.com/user-attachments/assets/ad975164-ca06-4d03-842d-0ee4cdfdae7a)
 
 Post cts Result:
+
+Run openlaneflow synthesis with modified command to improve timing
+
 ```
 # Change directory to openlane flow directory
 cd Desktop/work/tools/openlane_working_dir/openlane
